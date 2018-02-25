@@ -83,6 +83,7 @@ namespace WindowsFormsApp1
                         if (test == "JMP")
                         {
                         }
+                        // microoperation of lda
                         else if (test.ToUpper() == "LDA")
                         {
                             test = line[i].Substring(3, 3);
@@ -104,14 +105,53 @@ namespace WindowsFormsApp1
                             else if (test.ToUpper() == "REL")
                             {
 
+                                MAR = Int32.Parse(line[i].Substring(6, 3)) + PC;
+                                ACBox.Text = MM[MAR].ToString();
+
+                            }
+                            else if (test.ToUpper() == "INM")
+                            {
+
+                                ACBox.Text = line[i].Substring(6, 3);
+                                 
+
+                            }
+
+                        }
+                        // microopretaion of add
+                        else if (test.ToUpper() == "ADD")
+                        {
+                            test = line[i].Substring(3, 3);
+                            if (test == "ABS")
+                            {
+                                MAR = Int32.Parse(line[i].Substring(6, 3));
+                                ACBox.Text = Int32.Parse(ACBox.Text) + MM[MAR].ToString();
+
+                            }
+                            else if (test.ToUpper() == "IND")
+                            {
+
                                 MAR = Int32.Parse(line[i].Substring(6, 3));
 
                                 resource = MM[MAR];
                                 ACBox.Text = MM[resource].ToString();
 
                             }
+                            else if (test.ToUpper() == "REL")
+                            {
+
+                                MAR = Int32.Parse(line[i].Substring(6, 3)) + PC;
+                                ACBox.Text = MM[MAR].ToString();
+
+                            }
+                            else if (test.ToUpper() == "INM")
+                            {
+
+                                ACBox.Text = line[i].Substring(6, 3);
+
+
+                            }
                         }
-                        else if (test.ToUpper() == "ADD") { }
                         else if (test.ToUpper() == "STA") { }
                         else if (test.ToUpper() == "SUB") { }
                         else if (test.ToUpper() == "CLA") { }
