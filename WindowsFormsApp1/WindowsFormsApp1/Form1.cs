@@ -18,11 +18,13 @@ namespace WindowsFormsApp1
         string lineaOfCode;
         string lineaOfCodeS;
         string[] line = new string[1000];
-        int resource;
+        int resource = 0;
         int IR = 0;
         int PC = 1;
+        int AC = 0;
         int MAR = 0;
         int MDR = 0;
+        string sResource;
         int[] MM = new int[999]; // left direction right data
         string test;
         int LengthMemory;
@@ -56,15 +58,18 @@ namespace WindowsFormsApp1
 
                 IRBox.Text = IR.ToString();
                 MARBox.Text = MAR.ToString();
-
+                ACBox.Text = AC.ToString();
+                MDRBox.Text = MDR.ToString();
                 richTextBox2.Text = i.ToString();
                 LengthMemory = line[i].Length;
+                richTextBox3.Text += " " + i.ToString();
+
                 
 
                 if (LengthMemory != 6 && LengthMemory != 3 && LengthMemory != 9)
                 {
                     // display message error 
-                    richTextBox2.Text = "Error Ccheck line: " + i;
+                    richTextBox2.Text = "Error Check line: " + i;
                 }
                 else
                 {
@@ -90,7 +95,8 @@ namespace WindowsFormsApp1
                             if(test == "ABS")
                             {  
                                 MAR = Int32.Parse(line[i].Substring(6, 3));
-                                ACBox.Text = MM[MAR].ToString();
+                                AC = MM[MAR];
+                                ACBox.Text = AC.ToString();
 
                             }
                             else if (test.ToUpper() == "IND")
@@ -99,20 +105,24 @@ namespace WindowsFormsApp1
                                 MAR = Int32.Parse(line[i].Substring(6, 3));
                                 
                                 resource = MM[MAR];
-                                ACBox.Text = MM[resource].ToString();
+                                AC = MM[resource];
+                                ACBox.Text = AC.ToString();
 
                             }
                             else if (test.ToUpper() == "REL")
                             {
 
-                                MAR = Int32.Parse(line[i].Substring(6, 3)) + PC;
-                                ACBox.Text = MM[MAR].ToString();
+                                resource = Int32.Parse(line[i].Substring(6, 3));
+                                
+                                resource = PC + resource;
+                                AC = MM[resource];
+                                ACBox.Text = AC.ToString();
 
                             }
                             else if (test.ToUpper() == "INM")
                             {
-
-                                ACBox.Text = line[i].Substring(6, 3);
+                                AC = Int32.Parse(line[i].Substring(6, 3));
+                                ACBox.Text = AC.ToString();
                                  
 
                             }
@@ -125,7 +135,9 @@ namespace WindowsFormsApp1
                             if (test == "ABS")
                             {
                                 MAR = Int32.Parse(line[i].Substring(6, 3));
-                                ACBox.Text = Int32.Parse(ACBox.Text) + MM[MAR].ToString();
+                                resource = Int32.Parse(ACBox.Text);
+                                AC = MM[MAR] + resource;
+                                ACBox.Text = AC.ToString();
 
                             }
                             else if (test.ToUpper() == "IND")
@@ -134,26 +146,101 @@ namespace WindowsFormsApp1
                                 MAR = Int32.Parse(line[i].Substring(6, 3));
 
                                 resource = MM[MAR];
-                                ACBox.Text = MM[resource].ToString();
+                                AC = AC + MM[resource];
+                                ACBox.Text = AC.ToString();
 
                             }
                             else if (test.ToUpper() == "REL")
                             {
 
-                                MAR = Int32.Parse(line[i].Substring(6, 3)) + PC;
-                                ACBox.Text = MM[MAR].ToString();
+                                resource = Int32.Parse(line[i].Substring(6, 3));
+
+                                resource = PC + resource;
+                                AC = AC + MM[resource];
+                                ACBox.Text = AC.ToString();
 
                             }
                             else if (test.ToUpper() == "INM")
                             {
+                                AC = AC + Int32.Parse(line[i].Substring(6, 3));
+                                ACBox.Text = AC.ToString();
 
-                                ACBox.Text = line[i].Substring(6, 3);
 
 
                             }
                         }
-                        else if (test.ToUpper() == "STA") { }
-                        else if (test.ToUpper() == "SUB") { }
+                        // MICROOPERATION of STA
+                        else if (test.ToUpper() == "STA")
+                        {
+                            test = line[i].Substring(3, 3);
+                            if (test == "ABS")
+                            {
+                                MAR = Int32.Parse(line[i].Substring(6, 3));
+                                MM[MAR] = AC;
+
+
+                            }
+                            else if (test.ToUpper() == "IND")
+                            {
+
+                                MAR = Int32.Parse(line[i].Substring(6, 3));
+
+                                resource = MM[MAR];
+                                MM[resource] = AC;
+
+                            }
+                            else if (test.ToUpper() == "REL")
+                            {
+
+                                resource = Int32.Parse(line[i].Substring(6, 3));
+
+                                resource = PC + resource;
+                                MM[resource] = AC;
+
+                            }
+                        }
+                        // Microoperation SUB
+                        else if (test.ToUpper() == "SUB")
+                        {
+                            test = line[i].Substring(3, 3);
+                            if (test == "ABS")
+                            {
+                                MAR = Int32.Parse(line[i].Substring(6, 3));
+                                resource = Int32.Parse(ACBox.Text);
+                                AC =  resource - MM[MAR];
+                                ACBox.Text = AC.ToString();
+
+                            }
+                            else if (test.ToUpper() == "IND")
+                            {
+
+                                MAR = Int32.Parse(line[i].Substring(6, 3));
+
+                                resource = MM[MAR];
+                                AC = AC - MM[resource];
+                                ACBox.Text = AC.ToString();
+
+                            }
+                            else if (test.ToUpper() == "REL")
+                            {
+
+                                resource = Int32.Parse(line[i].Substring(6, 3));
+
+                                resource = PC + resource;
+                                AC = AC - MM[resource];
+                                ACBox.Text = AC.ToString();
+
+                            }
+                            else if (test.ToUpper() == "INM")
+                            {
+                                AC = AC - Int32.Parse(line[i].Substring(6, 3));
+                                ACBox.Text = AC.ToString();
+
+
+
+                            }
+
+                        }
                         else if (test.ToUpper() == "CLA") { }
 
                         else if (test.ToUpper() == "JMP") { }
@@ -253,6 +340,11 @@ namespace WindowsFormsApp1
         }
 
         private void richTextBox3_TextChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox3_TextChanged_2(object sender, EventArgs e)
         {
 
         }

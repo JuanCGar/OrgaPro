@@ -44,6 +44,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label5 = new System.Windows.Forms.Label();
             this.ACBox = new System.Windows.Forms.RichTextBox();
+            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -183,11 +184,21 @@
             this.ACBox.Text = "";
             this.ACBox.TextChanged += new System.EventHandler(this.richTextBox3_TextChanged_1);
             // 
+            // richTextBox3
+            // 
+            this.richTextBox3.Location = new System.Drawing.Point(122, 489);
+            this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.Size = new System.Drawing.Size(100, 96);
+            this.richTextBox3.TabIndex = 18;
+            this.richTextBox3.Text = "";
+            this.richTextBox3.TextChanged += new System.EventHandler(this.richTextBox3_TextChanged_2);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 641);
+            this.Controls.Add(this.richTextBox3);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.ACBox);
             this.Controls.Add(this.richTextBox2);
@@ -225,6 +236,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox ACBox;
+        private System.Windows.Forms.RichTextBox richTextBox3;
     }
 }
 
